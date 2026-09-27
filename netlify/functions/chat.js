@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
     const messages = body.messages;
 
     // YOUR GROQ KEY
-    const API_KEY = "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";
+    const API_KEY = "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";
 
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
