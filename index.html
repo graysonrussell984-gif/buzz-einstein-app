@@ -35,8 +35,8 @@
     </div>
 
     <script>
-        // PASTE YOUR OPENROUTER KEY HERE
-        const API_KEY = "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";
+        // PASTE YOUR GROQ KEY HERE
+        const API_KEY = ""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;
         
         let currentMode = 'buzz';
         let messages = []; 
@@ -90,14 +90,14 @@
             chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
-                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
                     headers: {
                         "Authorization": "Bearer " + API_KEY,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        "meta-llama/llama-3-8b-instruct:free", 
+                        "model": "llama-3.1-8b-instant", 
                         "messages": messages
                     })
                 });
