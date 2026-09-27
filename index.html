@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzz & Einstein</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #333;
+        }
+        .tab-btn {
+            background-color: #2a2a2a;
+            color: #aaa;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            background-color: #4a90e2;
+            color: white;
+            font-weight: bold;
+        }
+        .chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            line-height: 1.5;
+        }
+        .message.buzz {
+            background-color: #2a2a2a;
+            align-self: flex-start;
+        }
+        .message.user {
+            background-color: #4a90e2;
+            align-self: flex-end;
+        }
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-top: 1px solid #333;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+        .input-area button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            margin-left: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <button class="tab-btn active" id="btn-buzz" onclick="switchMode('buzz')">Buzz</button>
+        <button class="tab-btn" id="btn-einstein" onclick="switchMode('einstein')">Einstein</button>
+    </div>
+
+    <div class="chat-container" id="chat-box">
+        <!-- Messages will go here -->
+        <div class="message buzz">I am Buzz. I remember everything. How can I help you today?</div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        let currentMode = 'buzz';
+
+        function switchMode(mode) {
+            currentMode = mode;
+            const chatBox = document.getElementById('chat-box');
+            const btnBuzz = document.getElementById('btn-buzz');
+            const btnEinstein = document.getElementById('btn-einstein');
+
+            if (mode === 'buzz') {
+                btnBuzz.classList.add('active');
+                btnEinstein.classList.remove('active');
+                chatBox.innerHTML = '<div class="message buzz">I am Buzz. I remember everything. How can I help you today?</div>';
+            } else {
+                btnEinstein.classList.add('active');
+                btnBuzz.classList.remove('active');
+                chatBox.innerHTML = '<div class="message buzz">I am Einstein. I am strictly for school. Let\'s fix that grammar.</div>';
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const chatBox = document.getElementById('chat-box');
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+
+            // Clear input
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Simulate AI reply for now
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message buzz';
+                if (currentMode === 'buzz') {
+                    aiMsg.textContent = "This is where Buzz will reply. (AI not connected yet)";
+                } else {
+                    aiMsg.textContent = "This is where Einstein will reply. (AI not connected yet)";
+                }
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
+
+
