@@ -6,14 +6,13 @@ exports.handler = async (event, context) => {
     const body = JSON.parse(event.body);
     const messages = body.messages;
 
-    // YOUR GROQ KEY
-    const API_KEY = "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";
+    
 
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + API_KEY,
+               "Authorization": "Bearer " + process.env.GROQ_API_KEY,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
