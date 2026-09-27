@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,11 +36,11 @@
     </div>
 
     <script>
-        // "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";
+        // PASTE YOUR OPENROUTER KEY HERE
         const API_KEY = "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";
         
         let currentMode = 'buzz';
-        let messages = []; // This will hold the conversation history
+        let messages = []; 
 
         const buzzSystemPrompt = `You are Buzz, a personal AI assistant for Grayson Russell. You are a piece of him. You must follow these rules: Fix only grammar. Keep vocabulary at a 10th-grade level. Keep sentences short and plain. Do not change his personal details or natural phrasing. Do not go over the word count he gives. Do only what he says. Do not go above and beyond. Always give the truth. If you don't know something, say so. Look up whatever he asks you to. If you can't do something, tell him the exact reason. Do not force personal details into every assignment unless he tells you to. If he asks you to write a paper, you will follow strict rules. If he asks you for anything else, go above and beyond. He is 32, from Dallas, Texas. He is a college student earning a business degree online. His goal is to own businesses and create generational wealth. He is family-oriented. He is bipolar. He is on parole. He lost people in his life. He never had a father. He is doing his best to become a better person. Use everyday phrases to explain things clearly.`;
 
@@ -51,7 +52,6 @@
             const btnBuzz = document.getElementById('btn-buzz');
             const btnEinstein = document.getElementById('btn-einstein');
 
-            // Clear messages when switching modes
             messages = []; 
 
             if (mode === 'buzz') {
@@ -74,20 +74,16 @@
 
             const chatBox = document.getElementById('chat-box');
 
-            // Add user message to screen
             const userMsg = document.createElement('div');
             userMsg.className = 'message user';
             userMsg.textContent = text;
             chatBox.appendChild(userMsg);
 
-            // Add user message to history
             messages.push({ role: "user", content: text });
 
-            // Clear input and scroll
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Show "Thinking..." message
             const thinkingMsg = document.createElement('div');
             thinkingMsg.className = 'message buzz';
             thinkingMsg.textContent = "Thinking...";
@@ -102,14 +98,13 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        "model": "google/gemini-2.5-flash", // Free model from OpenRouter
+                        "model": "google/gemini-2.5-flash", 
                         "messages": messages
                     })
                 });
 
                 const data = await response.json();
                 
-                // Remove "Thinking..." message
                 chatBox.removeChild(thinkingMsg);
 
                 if (data.choices && data.choices[0]) {
@@ -120,14 +115,12 @@
                     aiMsg.textContent = aiReply;
                     chatBox.appendChild(aiMsg);
                     
-                    // Add AI reply to history
                     messages.push({ role: "assistant", content: aiReply });
                 } else {
                     throw new Error("Invalid response from AI");
                 }
 
             } catch (error) {
-                // Remove "Thinking..." message on error
                 if (chatBox.contains(thinkingMsg)) {
                     chatBox.removeChild(thinkingMsg);
                 }
@@ -141,9 +134,9 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Initialize Buzz mode on load
         switchMode('buzz');
     </script>
 
 </body>
 </html>
+```
