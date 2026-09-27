@@ -1,4 +1,3 @@
-
 exports.handler = async (event, context) => {
     if (event.httpMethod !== "POST") {
         return { statusCode: 405, body: "Method Not Allowed" };
@@ -34,3 +33,4 @@ exports.handler = async (event, context) => {
             body: JSON.stringify({ error: "Failed to fetch from Groq" })
         };
     }
+
