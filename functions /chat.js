@@ -1,18 +1,12 @@
-exports.handler = async (event, context) => {
-    if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed" };
-    }
-
-    const body = JSON.parse(event.body);
-    const messages = body.messages;
-
-    
-
+export async function onRequestPost(context) {
     try {
+        const body = await context.request.json();
+        const messages = body.messages;
+
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
             method: "POST",
             headers: {
-               "Authorization": "Bearer " + process.env.GROQ_API_KEY,
+                "Authorization": "Bearer " + context.env.GROQ_API_KEY,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -22,13 +16,14 @@ exports.handler = async (event, context) => {
         });
 
         const data = await response.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data)
-        };
+        return new Response(JSON.stringify(data), {
+            headers: { "Content-Type": "application/json" }
+        });
     } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: "Failed to fetch from Groq" })
-        };
+        return new Response(JSON.stringify({ error: "Failed to fetch from Groq" }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" }
+        });
     }
+}
+```
